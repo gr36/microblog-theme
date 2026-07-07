@@ -1,0 +1,6 @@
+{{- $dest := .Destination -}}
+{{- if hasPrefix $dest "uploads/" -}}{{- $dest = printf "/%s" $dest -}}{{- end -}}
+{{- $thumb := partial "photo-proxy.html" (dict "src" $dest "width" 900) -}}
+<a href="{{ $dest | safeURL }}" class="glightbox" data-gallery="{{ .Page.File.UniqueID }}"{{ with .Title }} title="{{ . }}"{{ end }}>
+  <img src="{{ $thumb | safeURL }}" loading="lazy" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} />
+</a>

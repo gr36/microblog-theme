@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="wrap">
+<div class="home-grid">
+<div class="grid-main">
+  <h1 class="page-title">Replies</h1>
+  <ul class="feed">
+    {{ $list := first 25 (where .Data.Pages.ByDate.Reverse "Type" "reply") }}
+    {{ range $list }}
+    <li class="card post-card note-card h-entry">
+      <div class="card-body">
+        <div class="card-meta">
+          <a href="{{ .RelPermalink }}" class="u-url"><time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 Jan 2006, 3:04pm" }}</time></a>
+        </div>
+        <div class="note-content e-content">{{ partial "content.html" . }}</div>
+      </div>
+    </li>
+    {{ end }}
+  </ul>
+</div>
+{{ partial "sidebar.html" . }}
+</div>
+</div>
+{{ end }}

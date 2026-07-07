@@ -1,0 +1,12 @@
+{{- /* Returns the first image URL for a page, or "" */ -}}
+{{- $src := "" -}}
+{{- with .Params.images -}}{{- $src = index . 0 -}}{{- end -}}
+{{- if not $src -}}
+  {{- with .Params.photos -}}{{- $src = index . 0 -}}{{- end -}}
+{{- end -}}
+{{- if not $src -}}
+  {{- $m := findRE `<img[^>]*src="[^"]+"` .Content 1 -}}
+  {{- with $m -}}{{- $src = replaceRE `(?s).*src="([^"]+)".*` "$1" (index . 0) -}}{{- end -}}
+{{- end -}}
+{{- if and $src (hasPrefix $src "uploads/") -}}{{- $src = printf "/%s" $src -}}{{- end -}}
+{{- return $src -}}

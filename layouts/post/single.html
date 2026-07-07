@@ -1,0 +1,85 @@
+{{ define "main" }}
+<div class="wrap">
+<div class="home-grid">
+<div class="grid-main">
+<article class="card article-card h-entry" data-pagefind-body>
+  {{ partial "back-link.html" . }}
+  <header class="post-header">
+    <div class="post-kicker">
+      {{ range .Params.categories }}
+      <a href="/categories/{{ . | urlize }}/">{{ . }}</a>
+      {{ end }}
+      <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 January 2006" }}</time>
+      <span>{{ .ReadingTime }} min read</span>
+    </div>
+    {{ with .Title }}
+    <h1 class="p-name post-title">{{ . }}</h1>
+    {{ end }}
+  </header>
+
+  <section class="e-content post-body">
+    {{ partial "content.html" . }}
+  </section>
+
+  {{ if in .Params.categories "Guide" }}
+  <div class="callout">
+    <h2>Did you get value from this?</h2>
+    Consider supporting me by chipping in for a coffee.
+    <a href="https://www.buymeacoffee.com/gregmorris">Buy Me A Coffee</a>
+  </div>
+  {{ end }}
+
+  <footer class="post-footer">
+    <div class="post-footer-meta">
+      {{ partial "reply-by-email.html" . }}
+      {{ range .Params.categories }}
+      <a class="chip" href="/categories/{{ . | urlize }}/">{{ . }}</a>
+      {{ end }}
+    </div>
+    {{ partial "microblog_syndication.html" . }}
+
+    {{ if .Site.Params.include_conversation }}
+    <div class="conversation">
+      <span class="conversation-label">Conversation</span>
+      <script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
+    </div>
+    {{ end }}
+  </footer>
+</article>
+</div>
+{{ partial "sidebar.html" . }}
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // merge consecutive gallery blocks into one so rows justify as a single set
+  document.querySelectorAll(".post-body .gallery").forEach(function (g) {
+    var prev = g.previousElementSibling;
+    if (prev && prev.classList && prev.classList.contains("gallery")) {
+      while (g.firstChild) { prev.appendChild(g.firstChild); }
+      g.remove();
+    }
+  });
+  var rowH = window.matchMedia("(max-width: 540px)").matches ? 150 : 230;
+  document.querySelectorAll(".post-body .gallery img").forEach(function (img) {
+    var a = img.closest("a");
+    if (!a) {
+      a = document.createElement("a");
+      a.href = img.getAttribute("data-full") || img.src;
+      a.className = "glightbox";
+      a.setAttribute("data-gallery", "post-gallery");
+      img.parentNode.insertBefore(a, img);
+      a.appendChild(img);
+    }
+    var size = function () {
+      if (!img.naturalWidth) return;
+      var ar = img.naturalWidth / img.naturalHeight;
+      a.style.width = (ar * rowH) + "px";
+      a.style.flexGrow = ar;
+    };
+    if (img.complete) { size(); } else { img.addEventListener("load", size); }
+  });
+  if (window.GLightbox) { GLightbox({ selector: ".glightbox" }); }
+});
+</script>
+{{ end }}

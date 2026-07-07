@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="wrap">
+  <div class="home-grid">
+    <section>
+      {{ partial "back-link.html" . }}
+      <h1 class="page-title">{{ .Title }}</h1>
+      <ul class="feed">
+        {{ $paginator := .Paginate .Pages.ByDate.Reverse }}
+        {{ range $paginator.Pages }}
+          {{ partial "post-card.html" . }}
+        {{ end }}
+      </ul>
+      {{ partial "pagination.html" . }}
+    </section>
+    {{ partial "sidebar.html" . }}
+  </div>
+</div>
+{{ end }}

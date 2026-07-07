@@ -1,0 +1,28 @@
+<div class="wrap">
+<div class="home-grid">
+<div class="grid-main">
+  {{ partial "back-link.html" . }}
+  <h1 class="page-title">Archive</h1>
+  <div class="card article-card" style="padding: 1.6rem 1.8rem;">
+    {{ partial "search.html" . }}
+    {{ $posts := where .Site.RegularPages "Type" "post" }}
+    {{ range $posts.GroupByDate "2006" }}
+    <h2 class="archive-year">{{ .Key }}</h2>
+    <ul class="archive-list">
+      {{ range .Pages }}
+      <li class="archive-item">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan" }}</time>
+        {{ if .Title }}
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{ else }}
+        <a href="{{ .RelPermalink }}">{{ .Summary | plainify | htmlUnescape | truncate 80 }}</a>
+        {{ end }}
+      </li>
+      {{ end }}
+    </ul>
+    {{ end }}
+  </div>
+</div>
+{{ partial "sidebar.html" . }}
+</div>
+</div>

@@ -1,0 +1,11 @@
+{{- /* Renders page content with root-relative fix for exported "uploads/" paths.
+       In production, raw <img> tags are served through micro.blog's photo resizer;
+       the original URL is kept in data-full for lightboxes. */ -}}
+{{- $c := .Content | string -}}
+{{- $c = replace $c `src="uploads/` `src="/uploads/` -}}
+{{- $c = replace $c `href="uploads/` `href="/uploads/` -}}
+{{- if not hugo.IsServer -}}
+{{- $base := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $c = replaceRE `<img src="/uploads/([^"]+)"` (printf `<img data-full="/uploads/$1" src="https://micro.blog/photos/800x/%s/uploads/$1"` $base) $c -}}
+{{- end -}}
+{{- return ($c | safeHTML) -}}

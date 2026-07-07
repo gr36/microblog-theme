@@ -1,0 +1,19 @@
+{{ define "main" }}
+<div class="wrap">
+<div class="home-grid">
+<div class="grid-main">
+<article class="card article-card">
+  {{ if and .Title (ne .Title .Site.Title) }}
+  <header class="post-header">
+    <h1 class="page-title" style="margin-bottom:0;">{{ .Title }}</h1>
+  </header>
+  {{ end }}
+  <section class="post-body">
+    {{ partial "content.html" . }}
+  </section>
+</article>
+</div>
+{{ partial "sidebar.html" . }}
+</div>
+</div>
+{{ end }}

@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="wrap">
+  <div class="home-grid">
+
+    <section class="h-feed">
+      {{ $posts := where .Site.RegularPages "Type" "post" }}
+      <ul class="feed">
+        {{ range first 12 $posts }}
+          {{ partial "post-card.html" . }}
+        {{ end }}
+      </ul>
+      <div class="feed-more">
+        <a class="button button-ghost" href="/archive/">Browse the full archive &rarr;</a>
+      </div>
+    </section>
+
+    {{ partial "sidebar.html" . }}
+
+  </div>
+  {{ partial "microblog_syndication.html" . }}
+</div>
+{{ end }}

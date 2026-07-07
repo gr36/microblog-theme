@@ -1,0 +1,15 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-copy">&copy; {{ now.Format "2006" }} {{ .Site.Title }}</p>
+    <div class="footer-links">
+      {{ with .Site.Params.author.activitypub }}
+      <a href="{{ .url }}" rel="me">Fediverse</a>
+      {{ end }}
+      {{ if .Site.Params.has_newsletters }}
+      <a href="/subscribe/">Newsletter</a>
+      {{ end }}
+      <a href="{{ "feed.xml" | relURL }}">RSS</a>
+      <a href="{{ "feed.json" | relURL }}">JSON Feed</a>
+    </div>
+  </div>
+</footer>

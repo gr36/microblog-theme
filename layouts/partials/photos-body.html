@@ -1,0 +1,19 @@
+<div class="wrap">
+  <h1 class="page-title">Photos</h1>
+  <div class="photo-grid">
+    {{ $category := index .Site.Taxonomies.categories "photos" }}
+    {{ with $category }}
+    {{ range .Pages }}
+      {{ $include := true }}
+      {{ if and $.Site.Params.photos_only_microblog (ne .Title "") }}{{ $include = false }}{{ end }}
+      {{ if and $include .Params.photos }}
+      <a href="{{ .RelPermalink }}">
+        {{ range first 1 .Params.photos }}
+        <img src="{{ partial "photo-proxy.html" (dict "src" . "width" 600) }}" loading="lazy" alt="">
+        {{ end }}
+      </a>
+      {{ end }}
+    {{ end }}
+    {{ end }}
+  </div>
+</div>

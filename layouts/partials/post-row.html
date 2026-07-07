@@ -1,0 +1,20 @@
+{{ if .Title }}
+<li class="feed-row h-entry">
+  <div class="feed-row-body">
+    <time class="label dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 January 2006" }}</time>
+    <h3><a class="p-name u-url" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <p class="excerpt">{{ .Summary | plainify | htmlUnescape | truncate 180 }}</p>
+  </div>
+  {{ $img := partial "feature-image.html" . }}
+  {{ with $img }}
+  <a class="row-thumb" href="{{ $.RelPermalink }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ . }}" loading="lazy" alt="">
+  </a>
+  {{ end }}
+</li>
+{{ else }}
+<li class="feed-note h-entry">
+  <a href="{{ .RelPermalink }}" class="label u-url"><time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 January 2006, 3:04pm" }}</time></a>
+  <div class="note-content e-content">{{ .Content }}</div>
+</li>
+{{ end }}

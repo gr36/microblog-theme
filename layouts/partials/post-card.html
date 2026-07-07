@@ -1,0 +1,29 @@
+{{ if .Title }}
+<li class="card post-card h-entry">
+  {{ $img := partial "feature-image.html" . }}
+  {{ with $img }}
+  <a class="card-image" href="{{ $.RelPermalink }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ partial "photo-proxy.html" (dict "src" . "width" 900) }}" loading="lazy" alt="">
+  </a>
+  {{ end }}
+  <div class="card-body">
+    <div class="card-meta">
+      {{ with index .Params.categories 0 }}<a class="card-cat" href="/categories/{{ . | urlize }}/">{{ . }}</a><span class="dot"></span>{{ end }}
+      <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 Jan 2006" }}</time>
+      <span class="dot"></span>
+      <span>{{ .ReadingTime }} min read</span>
+    </div>
+    <h2><a class="p-name u-url" href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="excerpt">{{ .Summary | plainify | htmlUnescape | truncate 220 }}</p>
+  </div>
+</li>
+{{ else }}
+<li class="card post-card note-card h-entry">
+  <div class="card-body">
+    <div class="card-meta">
+      <a href="{{ .RelPermalink }}" class="u-url"><time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 Jan 2006, 3:04pm" }}</time></a>
+    </div>
+    <div class="note-content e-content">{{ partial "content.html" . }}</div>
+  </div>
+</li>
+{{ end }}
