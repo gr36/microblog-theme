@@ -2,11 +2,8 @@
 {{ $url := printf "https://api.omg.lol/address/%s/statuses/" $account }}
 {{ $data := dict }}
 {{ with try (resources.GetRemote $url) }}
-    {{ with .Err }}
-    {{ else }}
-        {{ with .Value }}
-            {{ $data = . | transform.Unmarshal }}
-        {{ end }}
+    {{ if and (not .Err) .Value }}
+        {{ $data = .Value.Content | transform.Unmarshal }}
     {{ end }}
 {{ end }}
 {{ if and $data $data.response }}

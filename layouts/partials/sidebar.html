@@ -26,7 +26,8 @@
   </div>
 
 
-  <a class="card side-card strava-card" href="https://www.strava.com/athletes/165319588" target="_blank" rel="noopener">
+  {{ with site.Params.strava_url }}
+  <a class="card side-card strava-card" href="{{ . }}" target="_blank" rel="noopener">
     <span class="strava-icon">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
     </span>
@@ -38,6 +39,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </span>
   </a>
+  {{ end }}
 
   {{ if .Site.Params.has_newsletters }}
   <div class="card side-card newsletter-card">

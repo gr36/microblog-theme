@@ -2,8 +2,8 @@
 {{- $width := .width | default 600 -}}
 {{- if hasPrefix $src "uploads/" -}}{{- $src = printf "/%s" $src -}}{{- end -}}
 {{- $out := $src -}}
-{{- if and (hasPrefix $src "/uploads/") (not hugo.IsServer) -}}
-  {{- $base := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $base := strings.TrimSuffix "/" (string site.BaseURL) -}}
+{{- if and (hasPrefix $src "/uploads/") (not (hasPrefix $base "http://localhost")) -}}
   {{- $out = printf "https://micro.blog/photos/%vx/%s%s" $width $base $src -}}
 {{- end -}}
 {{- return $out -}}

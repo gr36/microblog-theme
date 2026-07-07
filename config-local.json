@@ -189,7 +189,8 @@
       "2014"
     ],
     "status_account": "gr36",
-    "status_count": "10"
+    "status_count": "10",
+    "strava_url": "https://www.strava.com/athletes/165319588"
   },
   "pagination": {
     "pagerSize": 25

@@ -1,14 +1,14 @@
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
 <meta property="og:type" content="{{ with .Title }}article{{ else }}website{{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
-<meta name=”twitter:card” content=”summary” /> 
+<meta name="twitter:card" content="summary" />
 
 {{ with .Params.images }}
 {{ range first 6 . }}
 <meta property="og:image" content="{{ . | absURL }}" />
 {{ end }}
 {{ else }}
-<meta property="og:image" content="https://gregmorris.co.uk/uploads/2024/1.png" />
+{{ with .Site.Params.author.avatar }}<meta property="og:image" content="{{ . }}" />{{ end }}
 {{ end }}
 
 {{ with .Params.audio }}

@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/assets/css/style.css?{{ if hugo.IsServer }}{{ now.Unix }}{{ else }}{{ .Site.Params.theme_seconds }}{{ end }}">
+  <link rel="stylesheet" href="/assets/css/style.css?{{ if hasPrefix (string site.BaseURL) "http://localhost" }}{{ now.Unix }}{{ else }}{{ .Site.Params.theme_seconds }}{{ end }}">
 
   <link rel="me" href="https://github.com/gr36">
   <link rel="me" href="https://instagram.com/_greg_morris">
