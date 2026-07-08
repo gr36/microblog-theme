@@ -55,11 +55,11 @@
         {{ partial "reply-button.html" . }}
       </div>
 
-      <details id="leave-reply">
+      <details id="leave-reply" hidden>
         <summary>Leave a reply instead?</summary>
       </details>
 
-      <details id="comments-section">
+      <details id="comments-section" hidden>
         <summary id="comments-summary">Read comments (0)</summary>
         <div id="microblog-comments"></div>
       </details>
@@ -76,8 +76,6 @@
         var empty = document.getElementById("conversation-empty");
 
         if (!conversationContainer) {
-          replyDetails.style.display = "none";
-          commentsSection.style.display = "none";
           empty.hidden = false;
           return;
         }
@@ -87,9 +85,8 @@
 
         if (replyForm) {
           replyDetails.appendChild(replyForm);
+          replyDetails.hidden = false;
           if (replyForm.textContent.indexOf("Replying as") !== -1) { replyDetails.open = true; }
-        } else {
-          replyDetails.style.display = "none";
         }
 
         var commentCount = 0;
@@ -99,7 +96,7 @@
         });
 
         commentsSummary.textContent = "Read comments (" + commentCount + ")";
-        if (commentCount === 0) { commentsSection.style.display = "none"; empty.hidden = false; }
+        if (commentCount > 0) { commentsSection.hidden = false; } else { empty.hidden = false; }
 
         conversationContainer.remove();
       });
