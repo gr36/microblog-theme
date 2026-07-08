@@ -33,62 +33,61 @@
 
     {{ if .Site.Params.include_conversation }}
     <div class="conversation">
-      <span class="conversation-label">Conversation</span>
-
-      <p class="conversation-cta" id="conversation-empty" hidden>
-        <strong>No replies yet &mdash; start the conversation.</strong>
-      </p>
+      <span class="conversation-label">Reply via</span>
 
       <div class="reply-actions">
+        <a class="button button-ghost u-syndication conversation-{{ .Title | urlize }}" href="https://micro.blog/{{ .Site.Params.author.username }}/">Micro.blog</a>
+        {{ with .Params.threads }}{{ with .url }}
+        <a class="button button-ghost u-syndication" href="{{ . }}" target="_blank" rel="noopener">Threads</a>
+        {{ end }}{{ end }}
+        {{ with .Params.bluesky }}{{ with (or .link .url) }}
+        <a class="button button-ghost u-syndication" href="{{ . }}" target="_blank" rel="noopener">Bluesky</a>
+        {{ end }}{{ end }}
+        {{ with .Params.mastodon }}{{ if .id }}
+        <a class="button button-ghost u-syndication" href="https://{{ .hostname }}/@{{ .username }}/{{ .id }}" target="_blank" rel="noopener">Mastodon</a>
+        {{ end }}{{ end }}
         {{ partial "reply-button.html" . }}
-        {{ with .Params.bluesky }}
-        <a class="button button-ghost" href="{{ .url }}" target="_blank" rel="noopener">Reply on Bluesky</a>
-        {{ end }}
       </div>
 
-      <details id="leave-reply" open>
-        <summary>Reply with your Micro.blog account</summary>
+      <details id="leave-reply">
+        <summary>Leave a reply instead?</summary>
       </details>
 
-      <details id="comments-section" open>
-        <summary id="comments-summary">Replies</summary>
+      <details id="comments-section">
+        <summary id="comments-summary">Read comments (0)</summary>
         <div id="microblog-comments"></div>
       </details>
 
       <script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
       <script>
       document.addEventListener("DOMContentLoaded", function () {
-        var container = document.querySelector(".microblog_conversation");
+        var conversationContainer = document.querySelector(".microblog_conversation");
         var replyDetails = document.getElementById("leave-reply");
         var commentsSection = document.getElementById("comments-section");
         var commentsSummary = document.getElementById("comments-summary");
         var commentsDiv = document.getElementById("microblog-comments");
-        var empty = document.getElementById("conversation-empty");
 
-        if (!container) {
+        if (!conversationContainer) {
           replyDetails.style.display = "none";
           commentsSection.style.display = "none";
-          empty.hidden = false;
           return;
         }
 
-        var replyForm = container.querySelector(".microblog_reply_form");
+        var comments = conversationContainer.querySelectorAll(".microblog_post");
+        var replyForm = conversationContainer.querySelector(".microblog_reply_form");
+
         if (replyForm) { replyDetails.appendChild(replyForm); } else { replyDetails.style.display = "none"; }
 
-        var count = 0;
-        container.querySelectorAll(".microblog_post").forEach(function (comment) {
+        var commentCount = 0;
+        comments.forEach(function (comment) {
           commentsDiv.appendChild(comment);
-          count++;
+          commentCount++;
         });
 
-        if (count === 0) {
-          commentsSection.style.display = "none";
-          empty.hidden = false;
-        } else {
-          commentsSummary.textContent = count === 1 ? "1 reply" : count + " replies";
-        }
+        commentsSummary.textContent = "Read comments (" + commentCount + ")";
+        if (commentCount === 0) { commentsSection.style.display = "none"; }
 
-        container.remove();
+        conversationContainer.remove();
       });
       </script>
     </div>
