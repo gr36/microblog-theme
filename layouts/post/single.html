@@ -36,14 +36,11 @@
       <span class="conversation-label">Conversation</span>
 
       <p class="conversation-cta" id="conversation-empty" hidden>
-        <strong>No replies yet &mdash; start the conversation.</strong><br>
-        Replies from Micro.blog, Mastodon and Bluesky all land here.
+        <strong>No replies yet &mdash; start the conversation.</strong>
       </p>
 
       <div class="reply-actions">
-        {{ if in .Site.Params.reply_by_email_address "@" }}
-        {{ partial "reply-by-email.html" . }}
-        {{ end }}
+        {{ partial "reply-button.html" . }}
         {{ with .Params.bluesky }}
         <a class="button button-ghost" href="{{ .url }}" target="_blank" rel="noopener">Reply on Bluesky</a>
         {{ end }}

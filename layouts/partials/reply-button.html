@@ -1,0 +1,10 @@
+{{ $email := $.Site.Params.reply_by_email_address }}
+{{ if in $email "@" }}
+  {{ $subject := or $.Site.Params.reply_by_email_subject_prefix "Re: " }}
+  {{ if .Title }}{{ $subject = print $subject .Title }}{{ else }}{{ $subject = print $subject .Permalink }}{{ end }}
+  {{ if $.Site.Params.reply_by_email_enable_obfuscation }}
+  <a class="reply-by-email" href="/reply-by-email/" data-meta="{{ partial "rbe-obfuscate.html" (printf "mailto:%s?subject=%s" $email $subject) }}">&#9993;&#65039; &nbsp;Reply by email</a>
+  {{ else }}
+  <a class="reply-by-email" href="mailto:{{ $email }}?subject={{ $subject }}">&#9993;&#65039; &nbsp;Reply by email</a>
+  {{ end }}
+{{ end }}
