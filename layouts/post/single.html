@@ -4,15 +4,16 @@
 <div class="grid-main">
 <article class="card article-card h-entry" data-pagefind-body>
   <header class="post-header">
+    {{ with .Title }}
+    <h1 class="p-name post-title">{{ . }}</h1>
+    {{ end }}
     <div class="post-kicker">
       <time class="chip dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 January 2006" }}</time>
       {{ range .Params.categories }}
       <a class="chip" href="/categories/{{ . | urlize }}/">{{ . }}</a>
       {{ end }}
+      <span class="chip">{{ .ReadingTime }} min read</span>
     </div>
-    {{ with .Title }}
-    <h1 class="p-name post-title">{{ . }}</h1>
-    {{ end }}
   </header>
 
   <section class="e-content post-body">
