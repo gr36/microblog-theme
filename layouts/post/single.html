@@ -33,8 +33,14 @@
 
     {{ if .Site.Params.include_conversation }}
     <div class="conversation">
-      <span class="conversation-label">Reply via</span>
+      <span class="conversation-label">Conversation</span>
 
+      <p class="conversation-cta" id="conversation-empty" hidden>
+        <strong>No replies yet &mdash; start the conversation.</strong><br>
+        Reply from your own blog, Mastodon or Bluesky, sign in with Micro.blog, or just hit reply by email.
+      </p>
+
+      <span class="reply-via-label">Reply via</span>
       <div class="reply-actions">
         <a class="button button-ghost u-syndication conversation-{{ .Title | urlize }}" href="https://micro.blog/{{ .Site.Params.author.username }}/">Micro.blog</a>
         {{ with .Params.threads }}{{ with .url }}
@@ -67,9 +73,12 @@
         var commentsSummary = document.getElementById("comments-summary");
         var commentsDiv = document.getElementById("microblog-comments");
 
+        var empty = document.getElementById("conversation-empty");
+
         if (!conversationContainer) {
           replyDetails.style.display = "none";
           commentsSection.style.display = "none";
+          empty.hidden = false;
           return;
         }
 
@@ -85,7 +94,7 @@
         });
 
         commentsSummary.textContent = "Read comments (" + commentCount + ")";
-        if (commentCount === 0) { commentsSection.style.display = "none"; }
+        if (commentCount === 0) { commentsSection.style.display = "none"; empty.hidden = false; }
 
         conversationContainer.remove();
       });

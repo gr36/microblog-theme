@@ -729,6 +729,14 @@ a.reply-by-email:hover {
   font-size: 1.02rem;
 }
 
+.reply-via-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
 .reply-actions {
   display: flex;
   flex-wrap: wrap;
