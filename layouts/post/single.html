@@ -33,14 +33,7 @@
 
     {{ if .Site.Params.include_conversation }}
     <div class="conversation">
-      <span class="conversation-label">Conversation</span>
-
-      <p class="conversation-cta" id="conversation-empty" hidden>
-        <strong>No replies yet &mdash; start the conversation.</strong><br>
-        Reply from your own blog, Mastodon or Bluesky, sign in with Micro.blog, or just hit reply by email.
-      </p>
-
-      <span class="reply-via-label">Reply via</span>
+      <span class="conversation-label">Reply via</span>
       <div class="reply-actions">
         <a class="button button-ghost u-syndication conversation-{{ .Title | urlize }}" href="https://micro.blog/{{ .Site.Params.author.username }}/">Micro.blog</a>
         {{ with .Params.threads }}{{ with .url }}
@@ -55,53 +48,7 @@
         {{ partial "reply-button.html" . }}
       </div>
 
-      <details id="leave-reply">
-        <summary>Leave a reply instead?</summary>
-      </details>
-
-      <details id="comments-section">
-        <summary id="comments-summary">Read comments (0)</summary>
-        <div id="microblog-comments"></div>
-      </details>
-
       <script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
-      <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var conversationContainer = document.querySelector(".microblog_conversation");
-
-        if (conversationContainer) {
-          var comments = conversationContainer.querySelectorAll(".microblog_post");
-          var replyForm = conversationContainer.querySelector(".microblog_reply_form");
-
-          var replyDetails = document.getElementById("leave-reply");
-          if (replyForm) {
-            replyDetails.appendChild(replyForm);
-            if (replyForm.textContent.indexOf("Replying as") !== -1) { replyDetails.open = true; }
-          }
-
-          var commentsDiv = document.getElementById("microblog-comments");
-          var commentsSection = document.getElementById("comments-section");
-          var commentsSummary = document.getElementById("comments-summary");
-          var commentCount = 0;
-
-          comments.forEach(function (comment) {
-            commentsDiv.appendChild(comment);
-            commentCount++;
-          });
-
-          commentsSummary.textContent = "Read comments (" + commentCount + ")";
-
-          if (commentCount === 0) {
-            commentsSection.style.display = "none";
-            document.getElementById("conversation-empty").hidden = false;
-          }
-
-          conversationContainer.remove();
-        } else {
-          document.getElementById("conversation-empty").hidden = false;
-        }
-      });
-      </script>
     </div>
     {{ end }}
   </footer>
