@@ -29,11 +29,6 @@
   {{ end }}
 
   <footer class="post-footer">
-    <div class="post-footer-meta">
-      {{ range .Params.categories }}
-      <a class="chip" href="/categories/{{ . | urlize }}/">{{ . }}</a>
-      {{ end }}
-    </div>
     {{ partial "microblog_syndication.html" . }}
 
     {{ if .Site.Params.include_conversation }}
