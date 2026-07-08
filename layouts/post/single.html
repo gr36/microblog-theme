@@ -85,7 +85,12 @@
         var comments = conversationContainer.querySelectorAll(".microblog_post");
         var replyForm = conversationContainer.querySelector(".microblog_reply_form");
 
-        if (replyForm) { replyDetails.appendChild(replyForm); } else { replyDetails.style.display = "none"; }
+        if (replyForm) {
+          replyDetails.appendChild(replyForm);
+          if (replyForm.textContent.indexOf("Replying as") !== -1) { replyDetails.open = true; }
+        } else {
+          replyDetails.style.display = "none";
+        }
 
         var commentCount = 0;
         comments.forEach(function (comment) {
