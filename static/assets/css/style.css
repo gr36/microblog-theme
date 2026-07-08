@@ -707,7 +707,9 @@ a.reply-by-email:hover {
   margin-top: 2.2rem;
 }
 
-.conversation-label {
+/* heading renders only when conversation.js actually injects replies */
+.microblog_conversation::before {
+  content: "Conversation";
   display: block;
   font-size: 0.78rem;
   font-weight: 700;
