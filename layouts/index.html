@@ -9,30 +9,41 @@
 
       {{ if gt (len $micro) 0 }}
       <div class="micro-strip">
-        <div class="micro-strip-head">
-          <span class="strip-label">Micro</span>
-          <a class="more-link" href="/categories/micro/">All &rarr;</a>
+        <div class="section-head">
+          <h2>Recent Posts</h2>
+          <a class="section-link" href="/categories/micro/">View all &rarr;</a>
         </div>
         <ul class="micro-scroll">
           {{ range first 8 $micro }}
           <li class="micro-card h-entry">
-            <a class="micro-date u-url" href="{{ .RelPermalink }}">
-              <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 Jan" }}</time>
-            </a>
-            <div class="micro-text e-content">{{ partial "content.html" . }}</div>
+            <div class="micro-meta">
+              <span class="micro-dot" aria-hidden="true"></span>
+              <a class="micro-date u-url" href="{{ .RelPermalink }}">
+                <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 Jan" }}</time>
+              </a>
+            </div>
+            <p class="micro-text p-summary">{{ .Summary | plainify | htmlUnescape | truncate 140 }}</p>
+            {{ $img := partial "feature-image.html" . }}
+            {{ with $img }}
+            <img class="micro-photo" src="{{ partial "photo-proxy.html" (dict "src" . "width" 500) }}" loading="lazy" alt="">
+            {{ end }}
           </li>
           {{ end }}
         </ul>
       </div>
       {{ end }}
 
+      <div class="section-head">
+        <h2>Blog Posts</h2>
+        <a class="section-link" href="/archive/">View all &rarr;</a>
+      </div>
       <ul class="feed">
         {{ range first 12 $posts }}
           {{ partial "post-card.html" . }}
         {{ end }}
       </ul>
       <div class="feed-more">
-        <a class="button button-ghost" href="/archive/">Browse the full archive &rarr;</a>
+        <a class="button button-ghost" href="/archive/">View all &rarr;</a>
       </div>
     </section>
 
