@@ -55,11 +55,11 @@
         {{ partial "reply-button.html" . }}
       </div>
 
-      <details id="leave-reply" hidden>
+      <details id="leave-reply">
         <summary>Leave a reply instead?</summary>
       </details>
 
-      <details id="comments-section" hidden>
+      <details id="comments-section">
         <summary id="comments-summary">Read comments (0)</summary>
         <div id="microblog-comments"></div>
       </details>
@@ -68,37 +68,38 @@
       <script>
       document.addEventListener("DOMContentLoaded", function () {
         var conversationContainer = document.querySelector(".microblog_conversation");
-        var replyDetails = document.getElementById("leave-reply");
-        var commentsSection = document.getElementById("comments-section");
-        var commentsSummary = document.getElementById("comments-summary");
-        var commentsDiv = document.getElementById("microblog-comments");
 
-        var empty = document.getElementById("conversation-empty");
+        if (conversationContainer) {
+          var comments = conversationContainer.querySelectorAll(".microblog_post");
+          var replyForm = conversationContainer.querySelector(".microblog_reply_form");
 
-        if (!conversationContainer) {
-          empty.hidden = false;
-          return;
+          var replyDetails = document.getElementById("leave-reply");
+          if (replyForm) {
+            replyDetails.appendChild(replyForm);
+            if (replyForm.textContent.indexOf("Replying as") !== -1) { replyDetails.open = true; }
+          }
+
+          var commentsDiv = document.getElementById("microblog-comments");
+          var commentsSection = document.getElementById("comments-section");
+          var commentsSummary = document.getElementById("comments-summary");
+          var commentCount = 0;
+
+          comments.forEach(function (comment) {
+            commentsDiv.appendChild(comment);
+            commentCount++;
+          });
+
+          commentsSummary.textContent = "Read comments (" + commentCount + ")";
+
+          if (commentCount === 0) {
+            commentsSection.style.display = "none";
+            document.getElementById("conversation-empty").hidden = false;
+          }
+
+          conversationContainer.remove();
+        } else {
+          document.getElementById("conversation-empty").hidden = false;
         }
-
-        var comments = conversationContainer.querySelectorAll(".microblog_post");
-        var replyForm = conversationContainer.querySelector(".microblog_reply_form");
-
-        if (replyForm) {
-          replyDetails.appendChild(replyForm);
-          replyDetails.hidden = false;
-          if (replyForm.textContent.indexOf("Replying as") !== -1) { replyDetails.open = true; }
-        }
-
-        var commentCount = 0;
-        comments.forEach(function (comment) {
-          commentsDiv.appendChild(comment);
-          commentCount++;
-        });
-
-        commentsSummary.textContent = "Read comments (" + commentCount + ")";
-        if (commentCount > 0) { commentsSection.hidden = false; } else { empty.hidden = false; }
-
-        conversationContainer.remove();
       });
       </script>
     </div>
