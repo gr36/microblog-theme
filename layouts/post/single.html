@@ -40,14 +40,22 @@
     <div class="conversation">
       <span class="conversation-label">Conversation</span>
 
-      <p id="conversation-empty" hidden>
-        No replies yet &mdash; be the first. You can reply from your own
-        Micro.blog account, or from Mastodon and Bluesky via the fediverse{{ if in .Site.Params.reply_by_email_address "@" }},
-        or {{ partial "reply-by-email.html" . }}{{ end }}.
+      <p class="conversation-cta" id="conversation-empty" hidden>
+        <strong>No replies yet &mdash; start the conversation.</strong><br>
+        Replies from Micro.blog, Mastodon and Bluesky all land here.
       </p>
 
-      <details id="leave-reply">
-        <summary>Leave a reply</summary>
+      <div class="reply-actions">
+        {{ if in .Site.Params.reply_by_email_address "@" }}
+        {{ partial "reply-by-email.html" . }}
+        {{ end }}
+        {{ with .Params.bluesky }}
+        <a class="button button-ghost" href="{{ .url }}" target="_blank" rel="noopener">Reply on Bluesky</a>
+        {{ end }}
+      </div>
+
+      <details id="leave-reply" open>
+        <summary>Reply with your Micro.blog account</summary>
       </details>
 
       <details id="comments-section" open>

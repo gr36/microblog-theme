@@ -717,14 +717,29 @@ a.reply-by-email:hover {
   margin-bottom: 1rem;
 }
 
-#conversation-empty {
+.conversation-cta {
   font-size: 0.95rem;
   color: var(--muted);
-  margin: 0 0 1rem;
+  margin: 0 0 1.1rem;
+  line-height: 1.55;
 }
 
-#conversation-empty .reply-by-email {
-  margin-left: 0.2rem;
+.conversation-cta strong {
+  color: var(--ink);
+  font-size: 1.02rem;
+}
+
+.reply-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.reply-actions .button-ghost {
+  font-size: 0.82rem;
+  padding: 0.45rem 1.1rem;
 }
 
 .conversation details {
