@@ -1183,3 +1183,31 @@ details summary {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
 }
+
+/* Micro.blog sign-in / reply form (inside Leave a reply) ---------------------------- */
+
+.microblog_reply_form {
+  margin-top: 0.9rem;
+}
+
+.microblog_reply_form p {
+  margin: 0 0 0.7rem;
+}
+
+.microblog_reply_signin {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.microblog_reply_signin a {
+  font-weight: 600;
+}
+
+.microblog_reply_form textarea:disabled {
+  opacity: 0.55;
+}
+
+.microblog_reply_form input[type="submit"]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
