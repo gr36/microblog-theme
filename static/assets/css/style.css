@@ -538,19 +538,8 @@ h3 { font-size: 1.15rem; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--muted);
-  margin-bottom: 0.8rem;
-}
-
-.post-kicker a {
-  color: var(--accent);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.74rem;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .post-title {

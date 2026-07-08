@@ -3,14 +3,12 @@
 <div class="home-grid">
 <div class="grid-main">
 <article class="card article-card h-entry" data-pagefind-body>
-  {{ partial "back-link.html" . }}
   <header class="post-header">
     <div class="post-kicker">
+      <time class="chip dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 January 2006" }}</time>
       {{ range .Params.categories }}
-      <a href="/categories/{{ . | urlize }}/">{{ . }}</a>
+      <a class="chip" href="/categories/{{ . | urlize }}/">{{ . }}</a>
       {{ end }}
-      <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "2 January 2006" }}</time>
-      <span>{{ .ReadingTime }} min read</span>
     </div>
     {{ with .Title }}
     <h1 class="p-name post-title">{{ . }}</h1>
@@ -31,7 +29,6 @@
 
   <footer class="post-footer">
     <div class="post-footer-meta">
-      {{ partial "reply-by-email.html" . }}
       {{ range .Params.categories }}
       <a class="chip" href="/categories/{{ . | urlize }}/">{{ . }}</a>
       {{ end }}
