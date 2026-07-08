@@ -38,7 +38,59 @@
 
     {{ if .Site.Params.include_conversation }}
     <div class="conversation">
+      <span class="conversation-label">Conversation</span>
+
+      <p id="conversation-empty" hidden>
+        No replies yet &mdash; be the first. You can reply from your own
+        Micro.blog account, or from Mastodon and Bluesky via the fediverse{{ if in .Site.Params.reply_by_email_address "@" }},
+        or {{ partial "reply-by-email.html" . }}{{ end }}.
+      </p>
+
+      <details id="leave-reply">
+        <summary>Leave a reply</summary>
+      </details>
+
+      <details id="comments-section" open>
+        <summary id="comments-summary">Replies</summary>
+        <div id="microblog-comments"></div>
+      </details>
+
       <script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
+      <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var container = document.querySelector(".microblog_conversation");
+        var replyDetails = document.getElementById("leave-reply");
+        var commentsSection = document.getElementById("comments-section");
+        var commentsSummary = document.getElementById("comments-summary");
+        var commentsDiv = document.getElementById("microblog-comments");
+        var empty = document.getElementById("conversation-empty");
+
+        if (!container) {
+          replyDetails.style.display = "none";
+          commentsSection.style.display = "none";
+          empty.hidden = false;
+          return;
+        }
+
+        var replyForm = container.querySelector(".microblog_reply_form");
+        if (replyForm) { replyDetails.appendChild(replyForm); } else { replyDetails.style.display = "none"; }
+
+        var count = 0;
+        container.querySelectorAll(".microblog_post").forEach(function (comment) {
+          commentsDiv.appendChild(comment);
+          count++;
+        });
+
+        if (count === 0) {
+          commentsSection.style.display = "none";
+          empty.hidden = false;
+        } else {
+          commentsSummary.textContent = count === 1 ? "1 reply" : count + " replies";
+        }
+
+        container.remove();
+      });
+      </script>
     </div>
     {{ end }}
   </footer>
